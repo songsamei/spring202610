@@ -22,4 +22,7 @@ public interface EmpMapper {
 	
 	// 중복 체크
 	Emp selectEmp(HashMap<String, Object> map);
+	
+	// 전체 등급 조회
+	List<Emp> selectGradeList(HashMap<String, Object> map);
 }
