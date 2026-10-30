@@ -11,7 +11,7 @@ import com.example.demo.model.Professor;
 
 @Mapper
 public interface ProfessorMapper {
-	List<Professor> selectProfessorList();
+	List<Professor> selectProfessorList(HashMap<String, Object> map);
 	// 삭제
 	int deleteProfessor(HashMap<String, Object> map);
 	
@@ -23,4 +23,7 @@ public interface ProfessorMapper {
 	
 	// 학과 리스트
 	List<Professor> selectDeptList(HashMap<String, Object> map);
+	
+	// 수정
+	int updateProfessor(HashMap<String, Object> map);
 }

@@ -27,24 +27,36 @@
 <body>
     <div id="app">
         <!-- html 코드는 id가 app인 태그 안에서 작업 -->
-        EMP
-         <div>
-			<table>
-				<tr>
-					<th>사번</th>
-					<th>이름</th>
-					<th>직급</th>
+        <div>
+            급여등급 : 
+            <select v-model="grade" @change="fnList">
+                <option value="">:: 전체 ::</option>
+                <option v-for="item in gradeList" :value="item.grade">{{item.grade}}</option>
+            </select>
+        </div>
+        <hr>
+        <div>
+            <table>
+                <tr>
+                    <th>사번</th>
+                    <th>이름</th>
+                    <th>직급</th>
                     <th>급여</th>
-				</tr>
-				<tr v-for="item in list">
-					<td>{{item.empNo}}</td>
-					<td>{{item.eName}}</td>
-					<td>{{item.job}}</td>
+                    <th>급여등급</th>
+                    <th>삭제</th>
+                </tr>
+                <tr v-for="item in list">
+                    <td>{{item.empNo}}</td>
+                    <td>
+                        <a href="javascript:;" @click="fnView(item.empNo)">{{item.eName}}</a>
+                    </td>
+                    <td>{{item.job}}</td>
                     <td>{{item.sal}}</td>
+                    <td>{{item.grade}}</td>
                     <td><button @click="fnRemove(item.empNo)">삭제</button></td>
-				</tr>
-			</table>
-		</div>
+                </tr>
+            </table>
+        </div>
     </div>
 </body>
 </html>
@@ -54,41 +66,49 @@
         data() {
             return {
                 // 변수 - (key : value)
-                list : []
+                list : [],
+                gradeList : [],
+                grade : ""
             };
         },
         methods: {
             // 함수(메소드) - (key : function())
             fnList : function () {
                 let self = this;
-                let param = {};
+                let param = {
+                    grade : self.grade
+                };
                 $.ajax({
                     url: "http://localhost:8080/emp/list.dox",
                     dataType: "json",
                     type: "POST",
                     data: param,
                     success: function (data) {
-                        console.log(data);
                         self.list = data.list;
+                        self.gradeList = data.gradeList;
+                        console.log(data);
                     }
                 });
             },
             fnRemove : function(empNo){
-				let self = this;
-				let param = {
+                let self = this;
+                let param = {
                     empNo : empNo
                 };
-				$.ajax({
-				    url: "http://localhost:8080/emp/remove.dox",
-				    dataType: "json",
-				    type: "POST",
-				    data: param,
-				    success: function (data) {
-						alert("삭제 됨!");
-						self.fnList();
-				    }
-				});
-			}
+                $.ajax({
+                    url: "http://localhost:8080/emp/remove.dox",
+                    dataType: "json",
+                    type: "POST",
+                    data: param,
+                    success: function (data) {
+                        alert("삭제 됨!");
+                        self.fnList();
+                    }
+                });
+            },
+            fnView : function(empNo){
+                pageChange("view.do", {empNo : empNo});
+            }
         }, // methods
         mounted() {
             // 처음 시작할 때 실행되는 부분

@@ -6,10 +6,25 @@
 	<select id="selectEmpList" parameterType="hashmap"
 		resultType="com.example.demo.model.Emp">
 		SELECT *
-		FROM EMP;
+		FROM EMP E
+		INNER JOIN SALGRADE S ON E.SAL BETWEEN S.LOSAL AND S.HISAL
+		WHERE 1=1 
+		<if test="grade != null and grade != ''">
+			AND GRADE = #{grade}
+		</if>
 	</select>
 	
 	<delete id="deleteEmp" parameterType="hashmap">
 		DELETE FROM EMP WHERE EMPNO = #{empNo}
 	</delete>
+	
+	<insert id="insertEmp" parameterType="hashmap">
+		INSERT INTO EMP(EMPNO, ENAME, JOB, SAL)
+		VALUES(#{empNo}, #{eName}, #{job}, #{sal})
+	</insert>
+	
+	<select id="selectEmp" parameterType="hashmap">
+		SELECT *
+		FROM EMP WHERE EMPNO = #{empNo}
+	</select>
 </mapper>

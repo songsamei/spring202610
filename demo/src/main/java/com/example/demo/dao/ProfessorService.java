@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.mapper.ProfessorMapper;
+import com.example.demo.model.Emp;
 import com.example.demo.model.Professor;
 
 @Service
@@ -16,9 +17,11 @@ public class ProfessorService {
 	
 	public HashMap<String, Object> getProfessorList(HashMap<String, Object> map){
 		HashMap<String, Object> resultMap = new HashMap();
-		List<Professor> list = professorMapper.selectProfessorList();
+		List<Professor> list = professorMapper.selectProfessorList(map);
+		List<Professor> deptList = professorMapper.selectDeptList(map);
 		
 		resultMap.put("list", list);
+		resultMap.put("deptList", deptList);
 		resultMap.put("result", "success");
 		
 		return resultMap;
@@ -57,6 +60,20 @@ public class ProfessorService {
 		resultMap.put("deptList", deptList);
 		resultMap.put("result", "success");
 		
+		return resultMap;
+	}
+
+	public HashMap<String, Object> editProfessor(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> resultMap = new HashMap();
+		try {
+			professorMapper.updateProfessor(map);
+			resultMap.put("result", "success");
+		} catch (Exception e) {
+			// TODO: handle exception
+			resultMap.put("result", "fail");
+			System.err.println(e.getMessage());
+		}
 		return resultMap;
 	}
 
