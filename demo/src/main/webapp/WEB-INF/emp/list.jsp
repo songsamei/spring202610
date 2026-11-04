@@ -86,7 +86,6 @@
                     success: function (data) {
                         self.list = data.list;
                         self.gradeList = data.gradeList;
-                        console.log(data);
                     }
                 });
             },
