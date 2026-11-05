@@ -11,4 +11,7 @@ public class Message {
 	
 	public static final String DELETE_SUCCESS = "삭제에 성공했습니다.";
 	public static final String DELETE_FAIL = "삭제에 실패했습니다.";
+	
+	public static final String INSERT_SUCCESS = "등록에 성공했습니다.";
+	public static final String INSERT_FAIL = "등록에 실패했습니다.";
 }

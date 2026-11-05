@@ -26,4 +26,8 @@ public interface ProfessorMapper {
 	
 	// 수정
 	int updateProfessor(HashMap<String, Object> map);
+	
+	
+	int selectProfessorCount(HashMap<String, Object> map);
+	
 }

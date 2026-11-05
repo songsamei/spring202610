@@ -37,4 +37,12 @@ public class UserService {
 		return resultMap;
 	}
 	
+	public HashMap<String, Object> addUser(HashMap<String, Object> map) {
+		HashMap<String, Object> resultMap = new HashMap();
+		userMapper.insertUser(map);
+		
+		resultMap.put("result", "success");
+		return resultMap;
+	}
+	
 }

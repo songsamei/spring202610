@@ -44,6 +44,12 @@
                 <option value="조교수">조교수</option>
                 <option value="전임강사">전임강사</option>
             </select>
+             <select v-model="pageSize" @change="fnList">
+                <option value="5">5개씩</option>
+                <option value="10">10개씩</option>
+                <option value="15">15개씩</option>
+                <option value="20">20개씩</option>
+            </select>
          </div>
          <hr>
          <div>
@@ -76,6 +82,11 @@
         <div>
             <a href="add.do"><button>교수추가</button></a>
         </div>
+        <div id="paging">
+            <a href="javascript:;" v-if="currentPage != 1" @click="currentPage--; fnList();">◀</a>
+            <a @click="currentPage = item; fnList();" :class="{active : currentPage == item}" href="javascript:;" v-for="item in idx">{{item}}</a>
+            <a href="javascript:;" v-if="currentPage != idx" @click="currentPage++; fnList();">▶</a>
+        </div>
     </div>
 </body>
 </html>
@@ -89,7 +100,11 @@
                 keyword : "",
                 deptList : [],
                 deptNo : "",
-                position : ""
+                position : "",
+
+                idx: 1,
+                pageSize : 5,
+                currentPage : 1
             };
         },
         methods: {
@@ -99,7 +114,10 @@
                 let param = {
                     keyword : self.keyword,
                     deptNo : self.deptNo,
-                    position : self.position
+                    position : self.position,
+
+                    limit : self.pageSize,
+                    offset : self.pageSize * (self.currentPage - 1)
                 };
                 $.ajax({
                     url: "http://localhost:8080/professor/list.dox",
@@ -110,6 +128,7 @@
                         console.log(data);
                         self.list = data.list;
                         self.deptList = data.deptList;
+                        self.idx = Math.ceil( data.count / self.pageSize );
                     }
                 });
             },
