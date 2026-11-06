@@ -11,7 +11,7 @@ public interface UserMapper {
 	// 사용자 조회
 	 User selectUser(HashMap<String, Object> map);
 	 
-	 // 추가
+	 // 회원가입
 	 int insertUser(HashMap<String, Object> map);
 
 }

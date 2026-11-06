@@ -11,7 +11,8 @@
 	</select>
 	
 	<insert id="insertUser" parameterType="hashmap">
-		INSERT INTO TBL_USER(USER_ID, PWD, USER_NAME, ADDR, ROLE)
-		VALUES(#{userId}, #{pwd}, #{userName}, #{addr}, #{role})
+		INSERT INTO TBL_USER
+		VALUES(#{userId}, #{pwd}, #{userName}, #{addr}, 'C')
 	</insert>
+	
 </mapper>

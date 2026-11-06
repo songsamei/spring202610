@@ -39,10 +39,20 @@ public class UserService {
 	
 	public HashMap<String, Object> addUser(HashMap<String, Object> map) {
 		HashMap<String, Object> resultMap = new HashMap();
-		userMapper.insertUser(map);
 		
-		resultMap.put("result", "success");
+		try {
+			int result = userMapper.insertUser(map);
+			
+			resultMap.put("result", "success");
+		} catch (Exception e) {
+			// TODO: handle exception
+			resultMap.put("result", "fail");
+			resultMap.put("message", Message.DB_ERR);
+			System.err.println(e.getMessage());
+		}
 		return resultMap;
 	}
+	
+
 	
 }
