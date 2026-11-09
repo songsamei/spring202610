@@ -31,6 +31,17 @@
 		FROM PRODUCT
 	</select>
 	
+	<select id="selectProductFile" parameterType="hashmap" resultType="com.example.demo.model.File">
+		SELECT *
+		FROM PRODUCT_FILE 
+		WHERE PRODUCT_ID = #{productId}
+	</select>
+	
+	<insert id="insertProduct" parameterType="hashmap" useGeneratedKeys="true" keyColumn="PRODUCT_ID" keyProperty="productId">
+		INSERT INTO PRODUCT(PRODUCT_ID, CATEGORY, PRODUCT_NAME, DESCRIPTION)
+		VALUES(Null, #{category}, #{productName}, #{description})
+	</insert>
+	
 	<select id="selectProduct" parameterType="HashMap" resultType="com.example.demo.model.Product">
 		SELECT *, ROUND(PRICE) AS CONVERT_PRICE
 		FROM PRODUCT
@@ -42,5 +53,10 @@
 		STATUS = "STOP"
 		WHERE PRODUCT_ID = #{productId} 
 	</delete>
+	
+	<insert id="insertProductFile" parameterType="hashmap">
+		INSERT INTO PRODUCT_FILE
+		VALUES(NULL, #{idx}, #{path}, #{fileName}, #{orgName}, #{size}, #{extName})
+	</insert>
 
 </mapper>

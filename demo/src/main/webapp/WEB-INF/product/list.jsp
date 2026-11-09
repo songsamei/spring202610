@@ -94,6 +94,7 @@
                     <td>{{item.releaseDate}}</td>
                 </tr>
             </table>
+            <a href="add.do"><button>상품등록</button></a>
          </div>
     </div>
 </body>

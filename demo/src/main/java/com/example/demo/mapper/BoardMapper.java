@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.example.demo.model.Board;
+import com.example.demo.model.File;
 
 @Mapper
 public interface BoardMapper {
@@ -30,6 +31,12 @@ public interface BoardMapper {
 	// 게시글 수정
 	
 	int updateBoard(HashMap<String, Object> map);
+	
+	// 파일업로드
+	int insertBoardFile(HashMap<String, Object> map);
+	
+	// 첨부파일 목록
+	List<File> selectBoardFile(HashMap<String, Object> map);
 }
 
 

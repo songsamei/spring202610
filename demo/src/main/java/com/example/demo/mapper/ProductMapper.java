@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.example.demo.model.File;
 import com.example.demo.model.Product;
 
 @Mapper
@@ -20,6 +21,15 @@ public interface ProductMapper {
 	
 	// 제품삭제
 	int deleteProduct(HashMap<String, Object> map);
+	
+	// 게시글 등록
+	int insertProduct(HashMap<String, Object> map);
+	
+	// 파일업로드
+	int insertProductFile(HashMap<String, Object> map);
+	
+	// 첨부파일 목록
+	List<File> selectProductFile(HashMap<String, Object> map);
 	
 	
 	
