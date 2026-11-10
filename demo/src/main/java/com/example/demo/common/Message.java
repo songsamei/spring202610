@@ -14,4 +14,7 @@ public class Message {
 	
 	public static final String INSERT_SUCCESS = "등록에 성공했습니다.";
 	public static final String INSERT_FAIL = "등록에 실패했습니다.";
+	
+	public static final String UPDATE_SUCCESS = "수정에 성공했습니다.";
+	public static final String UPDATAE_FAIL = "수정에 실패했습니다.";
 }

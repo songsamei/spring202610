@@ -94,7 +94,7 @@
                     return;
                 }
                 // 2. 아이디는 영어 소문자 + 숫자 조합, 영어로 시작
-                const idRegex = /^[a-z](?=.*[a-z0-9])(?=.*\d)[a-z0-9]*$/;
+            /*    const idRegex = /^[a-z](?=.*[a-z0-9])(?=.*\d)[a-z0-9]*$/;
                 if(!idRegex.test(self.userId)){
                     alert("아이디는 영어 소문자+숫자 조합입니다. \n아이디는 소문자로 시작해야 합니다.");
                     return;
@@ -118,7 +118,7 @@
                 if(self.userName == "" || self.addr == ""){
                     alert("필수값은 모두 입력해주세요!");
                     return;
-                }
+                } */
 
                 let param = {
                     userId : self.userId,

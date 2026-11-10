@@ -16,11 +16,23 @@ public interface BoardMapper {
 	// 게시글 상세정보
 	Board selectBoard(HashMap<String, Object> map);
 	
+	// 댓글목록
+	List<Board> selectBoardCommentList(HashMap<String, Object> map);
+	
+	// 댓글추가
+	int insertBoardComment(HashMap<String, Object> map);
+	
+	// 댓글 수정
+	int updateBoardComment(HashMap<String, Object> map);
+	
 	// 게시글 갯수
 	int selectBoardCount(HashMap<String, Object> map);
 	
 	// 게시글 삭제
 	int deleteBoard(HashMap<String, Object> map);
+	
+	// 댓글 삭제
+	int deleteBoardComment(HashMap<String, Object> map);
 	
 	// 게시글 여러개 삭제
 	int deleteBoardAll(HashMap<String, Object> map);
@@ -29,7 +41,6 @@ public interface BoardMapper {
 	int insertBoard(HashMap<String, Object> map);
 	
 	// 게시글 수정
-	
 	int updateBoard(HashMap<String, Object> map);
 	
 	// 파일업로드
@@ -37,6 +48,8 @@ public interface BoardMapper {
 	
 	// 첨부파일 목록
 	List<File> selectBoardFile(HashMap<String, Object> map);
+	
+	
 }
 
 

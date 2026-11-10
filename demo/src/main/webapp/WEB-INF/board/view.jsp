@@ -29,7 +29,7 @@
         <!-- html 코드는 id가 app인 태그 안에서 작업 -->
         <div>
             <h3>제목 : {{info.title}}</h3>
-            <h3>작성자 : {{info.userId}} | 조회수 : {{info.cnt}}</h3>
+            <h3>작성자 : {{info.userName}} | 조회수 : {{info.cnt}}</h3>
             <hr>
             <h4>내용</h4>
             <img v-for="item in fileList" :src="item.filePath">
@@ -37,7 +37,24 @@
         </div>
         <hr>
         <div>
+            <h3>댓글 목록</h3>
+            <div v-for="(item, index) in commentList">
+                <span><strong>{{item.userName}} : </strong></span>
+                <span v-if="index !== editIndex">{{item.contents}}</span>
+                <span v-else><input v-model="editComment"></span>
+                <button v-if="sessionId == item.userId" @click="fnEditComment(index)">수정</button>
+                <button v-if="sessionId == item.userId" @click="fnRemoveComment(item.commentNo)">삭제</button>
+            </div>
+            <br>
+            <div>
+                댓글작성 : <input @keyup.enter="fnAddComment" v-model="comment" style="width : 300px;">
+                <button @click="fnAddComment">등록</button>
+            </div>
+        </div>
+        <hr>
+        <div v-if="sessionId == info.userId || sessionRole == 'A' ">
             <button @click="fnView">수정</button>
+            <button @click="fnRemove">삭제</button>
         </div>
     </div>
 </body>
@@ -48,9 +65,18 @@
         data() {
             return {
                 // 변수 - (key : value)
+                sessionId : "${sessionId}",
+                sessionName : "${sessionName}",
+                sessionRole : "${sessionRole}",
+
                 boardNo : "${boardNo}",
                 info : {},
-                fileList : []
+                fileList : [],
+                commentList : [],
+                comment : "",
+
+                editComment : "",
+                editIndex : ""
             };
         },
         methods: {
@@ -58,7 +84,8 @@
             fnInfo : function () {
                 let self = this;
                 let param = {
-                    boardNo : self.boardNo
+                    boardNo : self.boardNo,
+                    option : "VIEW"
                 };
                 $.ajax({
                     url: "view.dox",
@@ -69,12 +96,106 @@
                         console.log(data);
                         self.info = data.info;
                         self.fileList = data.fileList;
+                        self.commentList = data.commentList;
                     }
                 });
             },
             fnView : function(){
                 let self = this;
                 pageChange("edit.do", {boardNo : self.boardNo});
+            },
+            fnRemove : function () {
+                let self = this;
+                let param = {
+                    boardNo : self.boardNo
+                };
+                $.ajax({
+                    url: "remove.dox",
+                    dataType: "json",
+                    type: "POST",
+                    data: param,
+                    success: function (data) {
+                        alert(data.message);
+                        if(data.result == "success"){
+                            location.href = "list.do";
+                        }
+                        
+                    }
+                });
+            },
+
+            fnRemoveComment : function (commentNo) {
+                let self = this;
+                let param = {
+                    commentNo : commentNo
+                };
+                if(!confirm("정말 삭제하시겠습니까?")){
+                    return;
+                }
+                $.ajax({
+                    url: "remove-comment.dox",
+                    dataType: "json",
+                    type: "POST",
+                    data: param,
+                    success: function (data) {
+                        alert(data.message);
+                        if(data.result == "success"){
+                            self.fnInfo();
+                        }
+                        
+                    }
+                });
+            },
+            fnAddComment : function () {
+                let self = this;
+                let param = {
+                    boardNo : self.boardNo,
+                    contents : self.comment
+                };
+                $.ajax({
+                    url: "add-comment.dox",
+                    dataType: "json",
+                    type: "POST",
+                    data: param,
+                    success: function (data) {
+                        alert(data.message);
+                        if(data.result == "success"){
+                            self.fnInfo();
+                            self.comment = "";
+                        }
+                        
+                    }
+                });
+            },
+            fnEditComment : function(index){
+                let self = this;
+                if(index != self.editIndex){
+                    self.editIndex = index;
+                    self.editComment = self.commentList[index].contents;
+                    return;
+                }
+
+
+                let param = {
+                    contents : self.editComment,
+                    commentNo : self.commentList[index].commentNo
+                };
+                $.ajax({
+                    url: "edit-comment.dox",
+                    dataType: "json",
+                    type: "POST",
+                    data: param,
+                    success: function (data) {
+                        alert(data.message);
+                        if(data.result == "success"){
+                            self.fnInfo();
+                            self.editIndex = -1;
+                        }
+                        
+                    }
+                });
+                
+                
             }
         }, // methods
         mounted() {
