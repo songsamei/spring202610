@@ -50,6 +50,20 @@ public class ProductService {
 		return resultMap;
 	}
 	
+	public HashMap<String, Object> getProductSum(HashMap<String, Object> map) {
+		HashMap<String, Object> resultMap = new HashMap();
+		try {
+			List<Product> list = productMapper.selectProductSum(map);
+			
+			resultMap.put("list", list);
+			resultMap.put("result", "success");
+		} catch (Exception e) {
+			// TODO: handle exception
+
+		}
+		return resultMap;
+	}
+	
 	public HashMap<String, Object> removeProduct(HashMap<String, Object> map) {
 		HashMap<String, Object> resultMap = new HashMap();
 		try {

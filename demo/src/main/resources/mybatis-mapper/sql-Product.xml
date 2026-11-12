@@ -26,6 +26,13 @@
 			</choose>
 	</select>
 	
+	<select id="selectProductSum" parameterType="HashMap" resultType="com.example.demo.model.Product">
+		SELECT PRODUCT_NAME, SUM(ORDER_PRICE) AS sum
+		FROM PRODUCT_ORDERS O
+		INNER JOIN PRODUCT P ON O.PRODUCT_ID = P.PRODUCT_ID
+		GROUP BY PRODUCT_NAME;
+	</select>
+	
 	<select id="selectCategoryList" parameterType="HashMap" resultType="com.example.demo.model.Product">
 		SELECT DISTINCT CATEGORY
 		FROM PRODUCT
@@ -58,5 +65,6 @@
 		INSERT INTO PRODUCT_FILE
 		VALUES(NULL, #{idx}, #{path}, #{fileName}, #{orgName}, #{size}, #{extName})
 	</insert>
+	
 
 </mapper>

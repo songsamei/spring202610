@@ -36,6 +36,9 @@
         <div>
             <button @click="fnLogin">로그인</button>
             <a href="join.do"><button>회원가입</button></a>
+            <a :href="location">
+                <img src="/img/kakao.png">
+            </a>
         </div>
     </div>
 </body>
@@ -47,7 +50,8 @@
             return {
                 // 변수 - (key : value)
                 userId : "",
-                pwd : ""
+                pwd : "",
+                location : "${location}"
             };
         },
         methods: {
@@ -55,7 +59,7 @@
             fnLogin : function () {
                 let self = this;
                 let param = {
-                     userId : self.userId,
+                    userId : self.userId,
                     pwd : self.pwd
                 };
                 $.ajax({

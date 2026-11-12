@@ -31,6 +31,12 @@ public class ProductController {
 		return "/product/list";
 	}
 	
+	@RequestMapping("/product/sum.do")
+	public String sum(Model model) throws Exception {
+
+		return "/product/sum";
+	}
+	
 	@RequestMapping("/product/view.do")
 	public String view(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		model.addAttribute("productId", map.get("productId")); //꺼내서보내주기
@@ -49,6 +55,16 @@ public class ProductController {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 
 		resultMap = productService.getProductList(map);
+
+		return new Gson().toJson(resultMap);
+	}
+	
+	@RequestMapping(value = "/product/sum.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String sum(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+
+		resultMap = productService.getProductSum(map);
 
 		return new Gson().toJson(resultMap);
 	}
