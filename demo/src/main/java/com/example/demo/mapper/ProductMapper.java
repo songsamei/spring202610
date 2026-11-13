@@ -33,6 +33,9 @@ public interface ProductMapper {
 	// 첨부파일 목록
 	List<File> selectProductFile(HashMap<String, Object> map);
 	
+	// 결제정보등록
+	int insertProductSession(HashMap<String, Object> map);
+	
 	
 	
 	

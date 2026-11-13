@@ -133,7 +133,7 @@
                     data: param,
                     success: function (data) {
                         alert("가입 ㅊㅋ");
-                        location.href = "login.do";
+                        location.href = "/login.do";
                     }
                 });
             },

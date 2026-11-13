@@ -10,9 +10,22 @@
 		WHERE USER_ID = #{userId}
 	</select>
 	
+	<select id="selectAuth" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*)
+		FROM TBL_USER
+		WHERE USER_ID = #{userId} AND PHONE = #{phone}
+	</select>
+	
 	<insert id="insertUser" parameterType="hashmap">
 		INSERT INTO TBL_USER
 		VALUES(#{userId}, #{hashPwd}, #{userName}, #{addr}, 'C')
 	</insert>
+	
+	<update id="updateUser" parameterType="hashmap">
+		UPDATE TBL_USER SET
+			PWD = #{hashPwd}
+		WHERE USER_ID = #{userId}
+	</update>
+	
 	
 </mapper>

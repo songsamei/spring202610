@@ -99,6 +99,16 @@ public class ProductController {
 		return new Gson().toJson(resultMap); 
 	}
 	
+	@RequestMapping(value = "/product/addSession.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String add1(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		
+		resultMap = productService.addProductSession(map);
+		
+		return new Gson().toJson(resultMap); 
+	}
+	
 	// controller
 		@RequestMapping("/product/fileUpload.dox")
 		@ResponseBody

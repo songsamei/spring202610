@@ -11,11 +11,16 @@ import com.example.demo.mapper.ProductMapper;
 import com.example.demo.model.File;
 import com.example.demo.model.Product;
 
+import jakarta.servlet.http.HttpSession;
+
 @Service
 public class ProductService {
 
 	@Autowired
 	ProductMapper productMapper;
+	
+	@Autowired
+	HttpSession session;
 	
 	public HashMap<String, Object> getProductList(HashMap<String, Object> map) {
 		HashMap<String, Object> resultMap = new HashMap();
@@ -108,6 +113,24 @@ public class ProductService {
 		return resultMap;
 	}
 	
+	public HashMap<String, Object> addProductSession(HashMap<String, Object> map) {
+		HashMap<String, Object> resultMap = new HashMap();
+		try {
+			
+
+				int result = productMapper.insertProductSession(map);
+
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			resultMap.put("result", "fail");
+			resultMap.put("message", Message.INSERT_FAIL);
+			System.out.println(e.getMessage());
+		}
+		return resultMap;
+	}
 	
 	
 }
+
+

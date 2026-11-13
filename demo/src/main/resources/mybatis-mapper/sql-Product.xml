@@ -66,5 +66,10 @@
 		VALUES(NULL, #{idx}, #{path}, #{fileName}, #{orgName}, #{size}, #{extName})
 	</insert>
 	
+	<insert id="insertProductSession" parameterType="hashmap">
+		INSERT INTO PRODUCT_ORDERS
+		VALUES(NULL, #{sessionId}, #{productId}, 1 , #{price}, 'ORDERED', NOW(), '인천', 'DONE', #{merchantUid})
+	</insert>
+	
 
 </mapper>

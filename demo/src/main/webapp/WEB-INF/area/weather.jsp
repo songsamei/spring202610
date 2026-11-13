@@ -36,12 +36,14 @@
                 <option value="">:: 선택 ::</option>
                 <option v-for="item in guList" :value="item.gu">{{item.gu}}</option>
             </select>
-            <select v-model="dong">
+            <select v-model="dong" @change="fnGetWeather">
                 <option value="">:: 선택 ::</option>
-                <option v-for="item in dongList" :value="item.dong">{{item.dong}}</option>
+                <option v-for="item in dongList" :value="item">{{item.dong}}</option>
             </select>
          </div>
-        
+        <div>
+
+        </div>
     </div>
 </body>
 </html>
@@ -118,10 +120,10 @@
                     pageNo : 1,
                     numOfRows : 1000,
                     dataType : "JSON",
-                    base_date : "20261112",
-                    base_time : "1600",
-                    nx : 55,
-                    ny : 125
+                    base_date : "20261113",
+                    base_time : "0900",
+                    nx : self.dong.nx,
+                    ny : self.dong.ny
                 };
                 $.ajax({
                     url: "https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst",
@@ -130,7 +132,24 @@
                     data: param,
                     success: function (data) {
                         console.log(data);
-                        
+                        let items = data.response.body.items.item;
+                        for(let i = 0; i < items.length; i++){
+                            let item = items[i];
+                            if(item.category == 'T1H'){
+                                // 기온에 대한 처리, 단위 : ℃
+                                console.log("기온 ==>", item.obsrValue);
+                            }
+                            if(item.category == 'RN1'){
+                                // 강수량에 대한 처리, 단위 :mm
+                                console.log("1시간 강수량 ==>", item.obsrValue);
+                            }
+                            if(item.category == 'PTY'){
+                                // 강수형태에 대한 처리
+                                // 없음(0), 비(1), 비/눈(2), 눈(3), 소나기(4), 빗방울(5), 빗방울눈날림(6), 눈날림(7)
+
+                                console.log("강수형태 강수량 ==>", item.obsrValue);
+                            }
+                        }
                     }
                 });
             }
@@ -139,7 +158,7 @@
             // 처음 시작할 때 실행되는 부분
             let self = this;
             self.fnList();
-            self.fnGetWeather();
+            // self.fnGetWeather();
         }
     });
 
