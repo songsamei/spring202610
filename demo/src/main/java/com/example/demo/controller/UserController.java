@@ -214,10 +214,10 @@ public class UserController {
 			resultMap = userService.getAuth(map);
 
 			// 4. 인증정보 반환
-			resultMap.put("success", true);
-			resultMap.put("name", name);
-			resultMap.put("phone", phone);
-			resultMap.put("birthday", birthday);
+//			resultMap.put("success", true);
+//			resultMap.put("name", name);
+//			resultMap.put("phone", phone);
+//			resultMap.put("birthday", birthday);
 
 		} catch (
 
